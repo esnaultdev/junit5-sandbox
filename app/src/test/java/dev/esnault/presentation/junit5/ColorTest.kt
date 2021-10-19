@@ -1,9 +1,6 @@
 package dev.esnault.presentation.junit5
 
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.*
 import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
 
@@ -73,43 +70,20 @@ class ColorTest {
             }
         }
 
-        @Nested
-        inner class Invalid {
-
-            @Test
-            @DisplayName("should throw for an empty string")
-            fun `empty string`() {
-                val colorString = ""
-                assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
+        @TestFactory
+        @DisplayName("Invalid")
+        fun invalidTests() = dynamicTests {
+            fun test(name: String, input: String) {
+                testThrows<IllegalArgumentException>(name = "should throw for: $name") {
+                    Color.fromString(input)
+                }
             }
 
-            @Test
-            @DisplayName("should throw for an invalid format (no #)")
-            fun `invalid format (no #)`() {
-                val colorString = "FFFFFF"
-                assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
-            }
-
-            @Test
-            @DisplayName("should throw for an invalid format (too short)")
-            fun `invalid format (too short)`() {
-                val colorString = "#FFF"
-                assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
-            }
-
-            @Test
-            @DisplayName("should throw for an invalid format (too long)")
-            fun `invalid format (too long)`() {
-                val colorString = "#FFFFFFFF"
-                assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
-            }
-
-            @Test
-            @DisplayName("should throw for an invalid format (not hex)")
-            fun `invalid format (not hex)`() {
-                val colorString = "#NOTHEX"
-                assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
-            }
+            test(name = "empty string", input = "")
+            test(name = "invalid format (no #)", input = "FFFFFF")
+            test(name = "invalid format (too short)", input = "#FFF")
+            test(name = "invalid format (too long)", input = "#FFFFFFFF")
+            test(name = "invalid format (not hex)", input = "#NOTHEX")
         }
     }
 }
