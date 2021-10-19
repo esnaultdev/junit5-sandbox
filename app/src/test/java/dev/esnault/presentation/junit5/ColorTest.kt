@@ -1,6 +1,7 @@
 package dev.esnault.presentation.junit5
 
 import org.junit.Test
+import org.junit.jupiter.api.Test as Junit5Test
 import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
 
@@ -8,21 +9,21 @@ class ColorTest {
 
     // region toString
 
-    @Test
+    @Junit5Test
     fun `toString should return #000000`() {
         val color = Color(0, 0, 0)
         val result = color.toString()
         assertEquals(expected = "#000000", actual = result)
     }
 
-    @Test
+    @Junit5Test
     fun `toString should return #FFFFFF`() {
         val color = Color(255, 255, 255)
         val result = color.toString()
         assertEquals(expected = "#FFFFFF", actual = result)
     }
 
-    @Test
+    @Junit5Test
     fun `toString should return #123456`() {
         val color = Color(18, 52, 86)
         val result = color.toString()
@@ -33,7 +34,7 @@ class ColorTest {
 
     // region fromString
 
-    @Test
+    @Junit5Test
     fun `fromString should parse #000000`() {
         val colorString = "#000000"
         val result = Color.fromString(colorString)
@@ -41,7 +42,7 @@ class ColorTest {
         assertEquals(expected = expected, actual = result)
     }
 
-    @Test
+    @Junit5Test
     fun `fromString should parse #FFFFFF`() {
         val colorString = "#FFFFFF"
         val result = Color.fromString(colorString)
@@ -49,7 +50,7 @@ class ColorTest {
         assertEquals(expected = expected, actual = result)
     }
 
-    @Test
+    @Junit5Test
     fun `fromString should parse #123456`() {
         val colorString = "#123456"
         val result = Color.fromString(colorString)

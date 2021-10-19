@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'de.mannodermaus.android-junit5'
 }
 
 android {
@@ -38,5 +39,13 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test:1.4.32'
-    testImplementation 'junit:junit:4.13.2'
+
+    // Junit 5
+    def junit5version = "5.8.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit5version"
+
+    // JUnit 4 (tests not migrated to JUnit 5 yet)
+    testImplementation("junit:junit:4.13.2")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:$junit5version")
 }
