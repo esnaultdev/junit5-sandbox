@@ -1,6 +1,5 @@
 package dev.esnault.presentation.junit5
 
-import java.util.*
 import kotlin.IllegalArgumentException
 
 /**
@@ -27,7 +26,7 @@ data class Color(
     override fun toString(): String {
         fun hex(value: Int): String = value.toString(radix = 16)
             .padStart(length = 2, padChar = '0')
-            .toUpperCase(Locale.ROOT)
+            .uppercase()
         return "#${hex(red)}${hex(green)}${hex(blue)}"
     }
 
