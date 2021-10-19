@@ -2,36 +2,24 @@ package dev.esnault.presentation.junit5
 
 import org.junit.jupiter.api.*
 import java.lang.IllegalArgumentException
-import kotlin.test.assertEquals
 
 class ColorTest {
 
-    @Nested
+    val testMapping = listOf<Pair<String, Color>>(
+        "#000000" to Color(0, 0, 0),
+        "#FFFFFF" to Color(255, 255, 255),
+        "#123456" to Color(18, 52, 86),
+    )
+
+    @TestFactory
     @DisplayName("toString()")
-    inner class ToString {
-
-        @Test
-        @DisplayName("should return #000000 for rgb(0, 0, 0)")
-        fun `#000000`() {
-            val color = Color(0, 0, 0)
-            val result = color.toString()
-            assertEquals(expected = "#000000", actual = result)
-        }
-
-        @Test
-        @DisplayName("should return #FFFFFF for rgb(255, 255, 255)")
-        fun `#FFFFFF`() {
-            val color = Color(255, 255, 255)
-            val result = color.toString()
-            assertEquals(expected = "#FFFFFF", actual = result)
-        }
-
-        @Test
-        @DisplayName("should return #123456 for rgb(18, 52, 86)")
-        fun `#123456`() {
-            val color = Color(18, 52, 86)
-            val result = color.toString()
-            assertEquals(expected = "#123456", actual = result)
+    fun toStringTests() = dynamicTests {
+        testMapping.forEach { (colorString, color) ->
+            testEquals(
+                name = "should return $colorString for rgb${color.toRgbString()}",
+                expected = colorString,
+                actual = color.toString(),
+            )
         }
     }
 
@@ -39,34 +27,15 @@ class ColorTest {
     @DisplayName("fromString()")
     inner class FromString {
 
-        @Nested
-        inner class Valid {
-
-            @Test
-            @DisplayName("should parse #000000 as rgb(0, 0, 0)")
-            fun `#000000`() {
-                val colorString = "#000000"
-                val result = Color.fromString(colorString)
-                val expected = Color(0, 0, 0)
-                assertEquals(expected = expected, actual = result)
-            }
-
-            @Test
-            @DisplayName("should parse #FFFFFF as rgb(255, 255, 255)")
-            fun `#FFFFFF`() {
-                val colorString = "#FFFFFF"
-                val result = Color.fromString(colorString)
-                val expected = Color(255, 255, 255)
-                assertEquals(expected = expected, actual = result)
-            }
-
-            @Test
-            @DisplayName("should parse #123456 as rgb(18, 52, 86)")
-            fun `#123456`() {
-                val colorString = "#123456"
-                val result = Color.fromString(colorString)
-                val expected = Color(18, 52, 86)
-                assertEquals(expected = expected, actual = result)
+        @TestFactory
+        @DisplayName("Valid")
+        fun validTests() = dynamicTests {
+            testMapping.forEach { (colorString, color) ->
+                testEquals(
+                    name = "should parse $colorString as rgb${color.toRgbString()}",
+                    expected = color,
+                    actual = Color.fromString(colorString),
+                )
             }
         }
 

@@ -30,6 +30,13 @@ data class Color(
         return "#${hex(red)}${hex(green)}${hex(blue)}"
     }
 
+    /**
+     * Returns the color in the (r, g, b) format.
+     */
+    fun toRgbString(): String {
+        return "($red, $green, $blue)"
+    }
+
     companion object {
         private val validRange = 0..255
 
