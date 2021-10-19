@@ -1,7 +1,7 @@
 package dev.esnault.presentation.junit5
 
-import org.junit.Test as Junit4Test
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
 
@@ -58,34 +58,34 @@ class ColorTest {
         assertEquals(expected = expected, actual = result)
     }
 
-    @Junit4Test(expected = IllegalArgumentException::class)
+    @Test
     fun `fromString should throw for an empty string`() {
         val colorString = ""
-        Color.fromString(colorString)
+        assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
     }
 
-    @Junit4Test(expected = IllegalArgumentException::class)
+    @Test
     fun `fromString should throw for an invalid format (no #)`() {
         val colorString = "FFFFFF"
-        Color.fromString(colorString)
+        assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
     }
 
-    @Junit4Test(expected = IllegalArgumentException::class)
+    @Test
     fun `fromString should throw for an invalid format (too short)`() {
         val colorString = "#FFF"
-        Color.fromString(colorString)
+        assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
     }
 
-    @Junit4Test(expected = IllegalArgumentException::class)
+    @Test
     fun `fromString should throw for an invalid format (too long)`() {
         val colorString = "#FFFFFFFF"
-        Color.fromString(colorString)
+        assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
     }
 
-    @Junit4Test(expected = IllegalArgumentException::class)
+    @Test
     fun `fromString should throw for an invalid format (not hex)`() {
         val colorString = "#NOTHEX"
-        Color.fromString(colorString)
+        assertThrows<IllegalArgumentException> { Color.fromString(colorString) }
     }
 
     // endregion
