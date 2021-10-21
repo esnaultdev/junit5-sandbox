@@ -2,6 +2,8 @@ package dev.esnault.presentation.junit5
 
 import org.junit.jupiter.api.*
 import java.lang.IllegalArgumentException
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class ColorTest {
 
@@ -19,6 +21,30 @@ class ColorTest {
                 name = "should return $colorString for rgb${color.toRgbString()}",
                 expected = colorString,
                 actual = color.toString(),
+            )
+        }
+    }
+
+    @Nested
+    @DisplayName("Multiple asserts")
+    inner class MultiAsserts {
+        @Test
+        fun multipleAssertsExample() {
+            val color = Color(0, 0, 0)
+            val result = color.toString()
+            assertEquals(expected = "#12", result.substring(0..2))
+            assertEquals(expected = "34", result.substring(3..4))
+            assertEquals(expected = "56", result.substring(5))
+        }
+
+        @Test
+        fun groupedAssertsExample() {
+            val color = Color(0, 0, 0)
+            val result = color.toString()
+            assertAll(
+                { assertEquals(expected = "#12", result.substring(0..2)) },
+                { assertEquals(expected = "34", result.substring(3..4)) },
+                { assertEquals(expected = "56", result.substring(5)) }
             )
         }
     }
